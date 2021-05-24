@@ -34,6 +34,7 @@ body {
 	font-size: 13px;
 	line-height: 24px;
 	overscroll-behavior: none;
+	margin-bottom: 8em;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -123,6 +124,7 @@ a, button, input, select {
     margin-top: 5em;
     margin-bottom: 5em;
     overflow: hidden;
+	border-style: none;
 }
 
 .footer {
