@@ -56,10 +56,10 @@ button {
 
 #info {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	width: 100%;
 	box-sizing: border-box;
-	text-align: center;
+ 
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
