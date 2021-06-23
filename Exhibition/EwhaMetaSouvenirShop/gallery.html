@@ -15,9 +15,26 @@
             margin: 0;
         }
 
-        .gallery {
+        body,html {
             margin: 0;
+        }
+
+        .gallery {
+            width:100%;
+            margin-top: 120px;
+        }
+        .gallery > div {
+            width:100%;
+            max-width:1200px;
+            margin: 0 auto;
             overflow: hidden;
+        }
+        .gallery > div > iframe {
+            width:33.33%;
+            float:left;
+            margin:0;
+            height:500px;
+            border: 0;
         }
     </style>
 </head>
@@ -28,9 +45,12 @@
     </div>
 
     <div class="gallery">
-        <embed src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCBasicGomdol.html" width="1280" height="720">
-        <embed src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCGreenMask.html" width="1280" height="720">
-        <embed src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCPinkMask.html" width="1280" height="720">
+        <div>
+            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCBasicGomdol.html"></iframe>
+            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCGreenMask.html" ></iframe>
+            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCPinkMask.html"></iframe>
+            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCPinkMask.html"></iframe>
+        </div>
     </div>
 
     <div class="footer">
