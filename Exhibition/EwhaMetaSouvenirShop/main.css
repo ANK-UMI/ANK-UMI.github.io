@@ -1,88 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>Ewha Meta Souvenir</title>
-    <link type="text/css" rel="stylesheet" href="main.css">
-    <link rel="icon" href="/icon/Display.png" type="image/png" sizes="16x16">
-    <style>
+html,
+body {
+  margin: 0;
+  background-color: transparent;
+}
 
-        body,
-        html {
-            margin: 0;
-            background-color: #fff;
-        }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: 'Orbitron', sans-serif;
+  margin: 0;
+  line-height: 1.75;
+}
 
-        .gallery {
-            width: 100%;
-            margin-top: 120px;
-            margin-bottom: 120px;
-        }
+p {
+  font-size: 1.2em;
+}
 
-        .gallery>div {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
+a {
+  color: #bbb;
+  text-decoration: none;
+}
 
-        .gallery>div>iframe {
-            width: 33.33%;
-            float: left;
-            margin: 0;
-            height: 500px;
-            border: 0;
-        }
-    </style>
-</head>
+a:hover {
+  text-decoration: underline;
+}
 
-<body>
-    <div class="title">
-        <h1><a href="#">Ewha Meta Souvenir</a></h1>
-    </div>
+.title {
+  font-family: 'Orbitron', sans-serif;
+  top: 5px;
+  left: 25px;
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  color: #bbb;
+  z-index: 2;
+  /* TODO Solve this in HTML */
 
-    <div class="gallery">
-        <div>
-            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCBasicGomdol.html"></iframe>
-            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCPinkGomdol.html"></iframe>
-            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCGreenMask.html"></iframe>
-            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCPinkMask.html"></iframe>
-            <iframe src="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/ECCPinkMask.html"></iframe>
-        </div>
-    </div>
+}
 
-    <div class="footer">
+.text {
+  font-family: 'Orbitron', sans-serif;
+  margin: 0 auto;
+  width: 50%;
+  margin-top: 10em;
+  margin-bottom: 10em;
+  overflow: hidden;
+  border-style: none;
+  color: #555;
+  z-index: 2;
+  /* TODO Solve this in HTML */
+  background-color: transparent;
+}
 
-        <div class="row">
+.menu {
+  position: fixed;
+  margin: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1em 1em 1em;
+  z-index: 2;
+  /* TODO Solve this in HTML */
 
-            <div class="column" style="background-color: #212ab5;">
-                <a href="https://ank-umi.github.io/Exhibition/EwhaMetaSouvenirShop/index.html">
-                    <p>
-                        ← EwhaMetaSouvenirShop
-                    </p>
-                </a>
-            </div>
+}
 
-            <div class="column" style="background-color: #212ab5;">
-                <p>
-                    ↓ Scroll Down To See More
-                </p>
-            </div>
+img {
+  margin: .4em;
+}
 
-            <div class="column" style="background-color: #212ab5;">
-                <p>
-                    How Can Buy? →
-                </p>
-            </div>
+.gallery {
+  float: left;
+  color: #bbb;
+  left: 0;
+  bottom: 10;
+  width: 100%;
+  padding: .5em;
+  background-color: transparent;
+}
 
-        </div>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1em;
+  background-color: #212ab5;
+  color: white;
+  text-align: center;
+  color: #bbb;
+}
 
-    </div>
+.column {
+  float: left;
+  width: 33.33%;
+  cursor: pointer;
+}
 
-
-</body>
-
-</html>
+.button {
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 16px;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
