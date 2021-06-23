@@ -1,144 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>glTF loader test</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="main.css">
-</head>
+	<head>
+		<title>EwhaMetaSouvenirShop</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<link rel="icon" href="/icon/Display.png" type="image/png" sizes="16x16">
+		<style>
+		</style>
+	</head>
 
-<body>
+	<body>
 
+		<script type="module">
 
-    <script type="module">
-        import * as THREE from './threejs/three.module.js';
+			import * as THREE from './threejs/three.module.js';
 
-        import {
-            OrbitControls
-        } from './threejs/OrbitControls.js';
-        import {
-            GLTFLoader
-        } from './threejs/GLTFLoader.js';
-        import { 
-            RGBELoader
-        } from './threejs/RGBELoader.js';
-        import {
-            RoughnessMipmapper
-        } from './threejs/RoughnessMipmapper.js';
+			import { OrbitControls } from './threejs/OrbitControls.js';
+			import { GLTFLoader } from './threejs/GLTFLoader.js';
+			import { RGBELoader } from './threejs/RGBELoader.js';
+			import { RoughnessMipmapper } from './threejs/RoughnessMipmapper.js';
 
-        let camera, scene, renderer;
+			let camera, scene, renderer;
 
-        init();
-        render();
+			init();
+			render();
 
-        function init() {
+			function init() {
 
-            const container = document.createElement('div');
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
 
-            //bgcolor
-            const color1 = new THREE.Color();
-            const color2 = new THREE.Color('#fff');
-            const color3 = new THREE.Color('#000');
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
+				camera.position.set(  1.8, -0.6, 2.7 );
 
-            document.body.appendChild(container);
+				scene = new THREE.Scene();
 
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
-            camera.position.set(1.8, 0.6, 2.7);
+				new RGBELoader()
+					.setDataType( THREE.UnsignedByteType )
+					.setPath( 'hdr/' )
+					.load( 'christmas_photo_studio_04_2k.hdr', function ( texture ) {
 
+						const envMap = pmremGenerator.fromEquirectangular( texture ).texture;
 
-            scene = new THREE.Scene();
+						scene.background = new THREE.Color( '#fff');
+						scene.environment = envMap;
 
-            new RGBELoader()
-                .setDataType(THREE.UnsignedByteType)
-                .setPath('hdr/')
-                .load('christmas_photo_studio_04_2k.hdr', function(texture) {
+						texture.dispose();
+						pmremGenerator.dispose();
 
-                    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+						render();
 
-                    //BGColor
-                    scene.background = color2;
+						// model
 
-                    scene.environment = envMap;
+						// use of RoughnessMipmapper is optional
+						const roughnessMipmapper = new RoughnessMipmapper( renderer );
 
-                    texture.dispose();
-                    pmremGenerator.dispose();
+						const loader = new GLTFLoader().setPath( 'model/' );
+						loader.load( 'ECCBearPink.gltf', function ( gltf ) {
 
-                    render();
+							gltf.scene.traverse( function ( child ) {
 
-                    // Model(.gltf or .glb format is available.)
+								if ( child.isMesh ) {
 
-                    // use of RoughnessMipmapper is optional
-                    const roughnessMipmapper = new RoughnessMipmapper(renderer);
+									roughnessMipmapper.generateMipmaps( child.material );
 
-                    const loader = new GLTFLoader().setPath('model/');
-                    loader.load('ECCBearPink.gltf', function(gltf) {
+								}
 
-                        gltf.scene.traverse(function(child) {
+							} );
 
-                            if (child.isMesh) {
+							scene.add( gltf.scene );
 
-                                // TOFIX RoughnessMipmapper seems to be broken with WebGL 2.0
-                                // roughnessMipmapper.generateMipmaps( child.material );
+							const model = gltf.scene;
+                            model.position.set( 0, 0, 0 );
+                            model.scale.set( .6, .6, .6 );
+                            scene.add( model );
 
-                            }
+							roughnessMipmapper.dispose();
 
-                        });
+							render();
 
-                        scene.add(gltf.scene);
+						} );
 
-                        roughnessMipmapper.dispose();
+					} );
 
-                        render();
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				renderer.toneMappingExposure = 1;
+				renderer.outputEncoding = THREE.sRGBEncoding;
+				container.appendChild( renderer.domElement );
 
-                    });
+				const pmremGenerator = new THREE.PMREMGenerator( renderer );
+				pmremGenerator.compileEquirectangularShader();
 
-                });
+				const controls = new OrbitControls( camera, renderer.domElement );
+				controls.addEventListener( 'change', render ); // use if there is no animation loop
+				controls.minDistance = 6;
+				controls.maxDistance = 8;
+				controls.target.set( 0, 0, 0 );
+				controls.update();
 
-            renderer = new THREE.WebGLRenderer({
-                antialias: true
-            });
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1;
-            renderer.outputEncoding = THREE.sRGBEncoding;
-            container.appendChild(renderer.domElement);
+				window.addEventListener( 'resize', onWindowResize );
 
-            const pmremGenerator = new THREE.PMREMGenerator(renderer);
-            pmremGenerator.compileEquirectangularShader();
+			}
 
-            const controls = new OrbitControls(camera, renderer.domElement);
-            controls.addEventListener('change', render); // use if there is no animation loop
-            controls.minDistance = 10;
-            controls.maxDistance = 20;
+			function onWindowResize() {
 
-            //Position
-            controls.target.set(0, 0, 0);
-            controls.update();
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
 
-            window.addEventListener('resize', onWindowResize, false);
+				renderer.setSize( window.innerWidth, window.innerHeight );
 
-        }
+				render();
 
-        function onWindowResize() {
+			}
 
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+			//
 
-            renderer.setSize(window.innerWidth, window.innerHeight);
+			function render() {
 
-            render();
+				renderer.render( scene, camera );
 
-        }
+			}
 
-        //
+		</script>
 
-        function render() {
-
-            renderer.render(scene, camera);
-
-        }
-    </script>
-
-</body></html>
+	</body>
+</html>
