@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
-html, body {
+html,
+body {
   margin: 0;
   background-color: transparent;
 }
@@ -17,6 +18,11 @@ p {
   line-height: 1.75;
 }
 
+p {
+  font-size: 1.2em;
+  color: #bbb;
+}
+
 a {
   color: #bbb;
   text-decoration: none;
@@ -26,37 +32,37 @@ a:hover {
   text-decoration: underline;
 }
 
-
 .title {
   font-family: 'Orbitron', sans-serif;
-  top: 0;
+  top: 5px;
+  left: 25px;
   position: fixed;
-    width: 100%;
-    padding: 1em 1em 1em;
-    box-sizing: border-box;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    color: #bbb;
-    z-index: 2; /* TODO Solve this in HTML */
+  width: 100%;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  color: #bbb;
+  z-index: 2;
+  /* TODO Solve this in HTML */
 
 }
 
 .text {
   font-family: 'Orbitron', sans-serif;
-  margin: 0 auto; 
+  margin: 0 auto;
   width: 50%;
   margin-top: 10em;
   margin-bottom: 10em;
   overflow: hidden;
   border-style: none;
   color: #555;
-  z-index: 2; /* TODO Solve this in HTML */
+  z-index: 2;
+  /* TODO Solve this in HTML */
   background-color: transparent;
 }
-
 
 .menu {
   position: fixed;
@@ -65,7 +71,8 @@ a:hover {
   bottom: 0;
   width: 100%;
   padding: 1em 1em 1em;
-  z-index: 2; /* TODO Solve this in HTML */
+  z-index: 2;
+  /* TODO Solve this in HTML */
 
 }
 
@@ -88,9 +95,19 @@ img {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: .5em;
+  padding: 1em;
   background-color: #212ab5;
   color: white;
   text-align: center;
 }
- 
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
